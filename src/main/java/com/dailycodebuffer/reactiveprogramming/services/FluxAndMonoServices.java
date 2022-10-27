@@ -53,6 +53,8 @@ public class FluxAndMonoServices {
                 .log();
     }
 
+    //La diferencia con flatMap es que concatMap va a mantener el orden de los elementos
+    //emitidos así se tenga un delay diferente para cada elemento emitido
     public Flux<String> fruitsFluxConcatMap() {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .concatMap(s -> Flux.just(s.split(""))
@@ -70,12 +72,16 @@ public class FluxAndMonoServices {
                 .log();
     }
 
+    //Se usa FLatMapMany  cuando se quiere hacer flatMap sobre un Mono pero se quiere 
+    //devolver un Flux y no un mono. Es decir convertir el Mono en un Flux
     public Flux<String> fruitMonoFlatMapMany() {
         return Mono.just("Mango")
                 .flatMapMany(s -> Flux.just(s.split("")))
                 .log();
     }
 
+
+    //Para cambiar de un tipo a otro
     public Flux<String> fruitsFluxTransform(int number) {
 
         Function<Flux<String>,Flux<String>> filterData
