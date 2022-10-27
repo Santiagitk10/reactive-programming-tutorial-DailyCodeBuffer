@@ -10,10 +10,13 @@ import java.util.function.Function;
 
 public class FluxAndMonoServices {
 
+    //con el método log() se puede ver en consola todos los eventos de reactive streams como
+    //la subscripción, el request unbounded, todos los onNext y el onComplete
     public Flux<String> fruitsFlux() {
         return Flux.fromIterable(List.of("Mango","Orange","Banana")).log();
     }
 
+    //Map para mapear la data en una forma diferente de data
     public Flux<String> fruitsFluxMap() {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .map(String::toUpperCase);
@@ -24,18 +27,23 @@ public class FluxAndMonoServices {
                 .filter(s -> s.length() > number);
     }
 
+    //Combinación de operadores, primero filter y luego map
     public Flux<String> fruitsFluxFilterMap(int number) {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .filter(s -> s.length() > number)
                 .map(String::toUpperCase);
     }
 
+    //FlatMap me convierte cada elemento emitido en un flujo, por eso este método en el test
+    //tiene 17  en el count de onNext. 17 flujos en total para el split de todas las letras
     public Flux<String> fruitsFluxFlatMap() {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .flatMap(s -> Flux.just(s.split("")))
                 .log();
     }
 
+    //Mismo método de flatMap arriba pero probando que es algo asíncrono, porque cada elemento
+    //va llegando según el delay que le haya tocado de manera random
     public Flux<String> fruitsFluxFlatMapAsync() {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .flatMap(s -> Flux.just(s.split(""))
