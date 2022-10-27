@@ -84,6 +84,9 @@ public class FluxAndMonoServices {
     //Para cambiar de un tipo a otro
     public Flux<String> fruitsFluxTransform(int number) {
 
+        //Se convirtió el filtro que está comentado abajo en una variable. Es una función que 
+        //recibe un flux de string y devuelve lo mismo. Esa variable se puede usar en 
+        //múltiples lugares
         Function<Flux<String>,Flux<String>> filterData
                 = data -> data.filter(s -> s.length() > number);
 
@@ -118,6 +121,7 @@ public class FluxAndMonoServices {
 
     }
 
+    //Para concatenar dos flujos. concat Es un método estático de la clase Flux
     public Flux<String> fruitsFluxConcat() {
         var fruits = Flux.just("Mango","Orange");
         var veggies = Flux.just("Tomato","Lemon");
@@ -125,6 +129,7 @@ public class FluxAndMonoServices {
         return Flux.concat(fruits,veggies);
     }
 
+    //concatWith es un método de instancia del Flux. No es estático
     public Flux<String> fruitsFluxConcatWith() {
         var fruits = Flux.just("Mango","Orange");
         var veggies = Flux.just("Tomato","Lemon");
