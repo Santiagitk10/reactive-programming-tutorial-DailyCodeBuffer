@@ -62,6 +62,8 @@ public class FluxAndMonoServices {
                 .log();
     }
 
+    //Como con flatMap se tiene que devolver un flujo en este caso un Mono se tienen que 
+    //meter todas las letras del split dentro de una lista
     public Mono<List<String>> fruitMonoFlatMap() {
         return Mono.just("Mango")
                 .flatMap(s -> Mono.just(List.of(s.split(""))))
