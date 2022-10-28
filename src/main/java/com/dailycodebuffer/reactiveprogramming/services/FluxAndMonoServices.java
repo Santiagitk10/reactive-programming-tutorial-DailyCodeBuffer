@@ -145,6 +145,8 @@ public class FluxAndMonoServices {
         return fruits.concatWith(veggies);
     }
 
+    //Respeta el orden en que se emiten los elementos, en este caso se espera Mango, Orange
+    //Tomato y por último Lemon. Método Estático
     public Flux<String> fruitsFluxMerge() {
         var fruits = Flux.just("Mango","Orange")
                 .delayElements(Duration.ofMillis(50));
@@ -154,6 +156,7 @@ public class FluxAndMonoServices {
         return Flux.merge(fruits,veggies);
     }
 
+    //Método de instancia
     public Flux<String> fruitsFluxMergeWith() {
         var fruits = Flux.just("Mango","Orange")
                 .delayElements(Duration.ofMillis(50));
@@ -163,6 +166,9 @@ public class FluxAndMonoServices {
         return fruits.mergeWith(veggies);
     }
 
+
+    //Método estático. Emite la data de manera secuencial. Es decir en orden sin importar 
+    //el delay
     public Flux<String> fruitsFluxMergeWithSequential() {
         var fruits = Flux.just("Mango","Orange")
                 .delayElements(Duration.ofMillis(50));
@@ -172,6 +178,8 @@ public class FluxAndMonoServices {
         return Flux.mergeSequential(fruits,veggies);
     }
 
+    //Me concatena los valores de los dos flujos, toma una función me va concatenando
+    //así: MontoTomato, OrangeLemon. El método toma hasta 8 combinaciones
     public Flux<String> fruitsFluxZip() {
         var fruits = Flux.just("Mango","Orange");
         var veggies = Flux.just("Tomato","Lemon");
@@ -180,6 +188,7 @@ public class FluxAndMonoServices {
                 (first,second) -> first+second).log();
     }
 
+    //Mismo de arriba pero método de instancia
     public Flux<String> fruitsFluxZipWith() {
         var fruits = Flux.just("Mango","Orange");
         var veggies = Flux.just("Tomato","Lemon");
