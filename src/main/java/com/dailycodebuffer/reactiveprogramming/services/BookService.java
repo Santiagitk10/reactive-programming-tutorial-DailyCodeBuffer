@@ -25,9 +25,12 @@ public class BookService {
     }
 
     public Flux<Book> getBooks() {
+        //en realidad esta variable se debería llamar allBooksInfo
         var allBooks = bookInfoService.getBooks();
         return allBooks
                 .flatMap(bookInfo -> {
+                        //Me traigo con el id del libro todos los review que vienen en la forma
+                        //de un flux de review y con collectList los convierto a Lista
                     Mono<List<Review>> reviews =
                             reviewService.getReviews(bookInfo.getBookId()).collectList();
                     return reviews
