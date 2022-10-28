@@ -51,6 +51,7 @@ class BookServiceMockTest {
         var books = bookService.getBooks();
 
         StepVerifier.create(books)
+                //Verifico que cuando haya un error me tire la custom exception que yo creé
                 .expectError(BookException.class)
                 .verify();
     }

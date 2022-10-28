@@ -56,6 +56,7 @@ public class BookService {
                     log.error("Exception is :" + throwable);
                     return new BookException("Exception occurred while fetching Books");
                 })
+                //Las veces que se require reintentar, sino intenta indefinidamente
                 .retry(3)
                 .log();
     }
@@ -78,6 +79,8 @@ public class BookService {
                 .log();
     }
 
+        //El RetryBackoffSpec indica cada cuántos segundos se debe volver a hacer el Retry
+        //En este caso solo se hace el retry cuando el erro es de tipo BookException
     private RetryBackoffSpec getRetryBackoffSpec() {
         return Retry.backoff(
                 3,

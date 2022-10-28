@@ -9,10 +9,14 @@ public class BackPressureTest {
 
     @Test
     public void testBackPressure() {
+        //Se usa el backpressure cuando el receiver no se puede manejar toda el flujo o 
+        //cantidad de data que viene del llamado, entonces se limita
         var numbers = Flux.range(1,100).log();
         //numbers.subscribe(integer -> System.out.println("integer = " + integer));
 
         numbers.subscribe(new BaseSubscriber<Integer>() {
+
+            //Acá estoy limitando la respuesta a 3 records
             @Override
             protected void hookOnSubscribe(Subscription subscription) {
                 request(3);
