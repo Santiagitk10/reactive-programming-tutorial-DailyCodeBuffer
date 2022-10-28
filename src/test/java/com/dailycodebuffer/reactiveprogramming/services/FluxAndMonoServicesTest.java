@@ -253,6 +253,7 @@ class FluxAndMonoServicesTest {
                 .verifyComplete();
     }
 
+
     @Test
     void fruitsFluxOnErrorMap() {
         //Hooks.onOperatorDebug();
@@ -264,6 +265,8 @@ class FluxAndMonoServicesTest {
         StepVerifier.create(fruitsFlux)
                 .expectNext("APPLE")
                 .expectError(IllegalStateException.class)
+                //cuando sucede un error no se puede verificar el Complete. Solo se 
+                //verifica porque luego del error no se termina de recibir el resto del flujo
                 .verify();
     }
 

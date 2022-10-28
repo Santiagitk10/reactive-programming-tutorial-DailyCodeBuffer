@@ -197,6 +197,8 @@ public class FluxAndMonoServices {
                 (first,second) -> first+second).log();
     }
 
+    //Cuando se va a hacer un zip de más de dos publishers se debe hacer un map sobre 
+    //la data para modificarla y se usan los métodos getT
     public Flux<String> fruitsFluxZipTuple() {
         var fruits = Flux.just("Mango","Orange");
         var veggies = Flux.just("Tomato","Lemon");
@@ -220,6 +222,8 @@ public class FluxAndMonoServices {
     }
 
 
+    //Cosas que se hacen como side effects luego de que pasan los eventos de la subscripción
+    //como OnNext, OnSubscribe, etc.
     public Flux<String> fruitsFluxFilterDoOn(int number) {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .filter(s -> s.length() > number)
@@ -232,7 +236,8 @@ public class FluxAndMonoServices {
                 .doOnComplete(() -> System.out.println("Completed!!!"));
     }
 
-
+    //En un caso real el error vendría del fallo real, acá se está generando el error 
+    //manualmente para la demostración
     public Flux<String> fruitsFluxOnErrorReturn() {
         return Flux.just("Apple","Mango")
                 .concatWith(Flux.error(
@@ -241,6 +246,9 @@ public class FluxAndMonoServices {
                 .onErrorReturn("Orange");
     }
 
+    //Cuando el error pasa va a seguir con el procesamiento y va a excluir la data que está 
+    //causando el error, en este caso ignora Mango. f en este caso es el objeto que causó 
+    //el error, e es el error.
     public Flux<String> fruitsFluxOnErrorContinue() {
         return Flux.just("Apple","Mango","Orange")
                 .map(s -> {
@@ -254,6 +262,9 @@ public class FluxAndMonoServices {
                 });
     }
 
+
+    //Para mapear la excepción a una excepción personalizada que tenga. Una vez pasa el error
+    //ya no se emiten más elementos del flujo
     public Flux<String> fruitsFluxOnErrorMap() {
         return Flux.just("Apple","Mango","Orange")
                 .checkpoint("Error Checkpoint1")
