@@ -8,6 +8,8 @@ import reactor.tools.agent.ReactorDebugAgent;
 public class ReactiveProgrammingTutorialApplication {
 
 	public static void main(String[] args) {
+		//cuando se haya agregado la dependencia de reator tools ya se puede usar este 
+		//debug agent
 		ReactorDebugAgent.init();
 		SpringApplication.run(ReactiveProgrammingTutorialApplication.class, args);
 	}

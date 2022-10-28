@@ -37,10 +37,13 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- dependencia para poder hacer debugging -->
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-tools</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
