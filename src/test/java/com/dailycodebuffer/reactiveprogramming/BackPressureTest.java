@@ -22,6 +22,7 @@ public class BackPressureTest {
                 request(3);
             }
 
+            //Cuando ya haya recibido la cantidad que necesito se cancela el proceso
             @Override
             protected void hookOnNext(Integer value) {
                 System.out.println("value = " + value);
@@ -45,6 +46,11 @@ public class BackPressureTest {
         });
     }
 
+
+    //onBackpressureDrop maneja la data que no se está teniendo en cuenta. Entonces el 
+    //publisher envía la información una vez y los métodos manejan la data que se queda 
+    //por fuera de lo que se pidió. Esa data que no se considera se mantiene en el queue
+    //interno y no se llama al publisher de nuevo
     @Test
     public void testBackPressureDrop() {
         var numbers = Flux.range(1,100).log();
@@ -84,6 +90,8 @@ public class BackPressureTest {
     }
 
 
+    //De igual manera se toman 3 datos, péro el buffer toma los adicionales y quedan 
+    //guardados en el queue interno.
     @Test
     public void testBackPressureBuffer() {
         var numbers = Flux.range(1,100).log();
@@ -122,6 +130,8 @@ public class BackPressureTest {
     }
 
 
+    //Muestra el error de que más de 3 datos han sido proveídos y que el receiver 
+    //no puede tomar más de la cantidad estipulada    
     @Test
     public void testBackPressureError() {
         var numbers = Flux.range(1,100).log();
