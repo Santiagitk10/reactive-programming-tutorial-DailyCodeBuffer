@@ -88,6 +88,8 @@ public class BookService {
                 );
     }
 
+        //El llamado a bookInfoService trae un mono y el reviewService trae un Flux, 
+        //el zipWith me une en el orden que le indico 
     public Mono<Book> getBookById(long bookId) {
         var book = bookInfoService.getBookById(bookId);
         var review = reviewService

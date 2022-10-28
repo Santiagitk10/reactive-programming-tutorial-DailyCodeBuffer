@@ -39,8 +39,8 @@ public class FluxAndMonoServices {
     //El flatMap me pide que retorne otro flujo de datos, no el dato como tal. Esto se utiliza
     //por ejemplo cuando en llamados a bases de datos, lo que yo estoy obteniendo son flujos de
     //la información encontrada y necesito aplanarlo. 
-    //Dicho de otra forma flatMap se usa cuando lo que me llega es un flujo externo (Asincrono)
-    //Y necesito aplanarlo
+    //Dicho de otra forma flatMap se usa cuando lo que me llega es un flujo externo 
+    //(Un publisher) (Asincrono) y necesito aplanarlo
     public Flux<String> fruitsFluxFlatMap() {
         return Flux.fromIterable(List.of("Mango","Orange","Banana"))
                 .flatMap(s -> Flux.just(s.split("")))
